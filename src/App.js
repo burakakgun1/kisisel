@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, message } from 'antd';
 import Login from './components/login.js';
 import Register from './components/register.js';
+import Tasks from './components/tasks.js';
 
 const App = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -19,7 +20,7 @@ const App = () => {
 
   const handleLoginOk = (userData) => {
     setIsLoggedIn(true);
-    setUserInfo(userData); // Kullanıcı bilgilerini userInfo'ye ata
+    setUserInfo(userData);
     setIsLoginModalOpen(false);
     message.success('Giriş başarılı!');
   };
@@ -35,7 +36,7 @@ const App = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUserInfo({ Kullanici_Ad: '', Kullanici_Soyad: '' }); // Kullanıcı çıkış yaptığında userInfo'yi sıfırla
+    setUserInfo({ Kullanici_Ad: '', Kullanici_Soyad: '' });
   };
 
   return (
@@ -44,7 +45,7 @@ const App = () => {
         {isLoggedIn ? (
           <div>
             <span style={{ marginRight: '10px' }}>
-              Hoşgeldiniz , {userInfo?.Kullanici_Ad} {userInfo?.Kullanici_Soyad}
+              Hoşgeldiniz, {userInfo?.Kullanici_Ad} {userInfo?.Kullanici_Soyad}
             </span>
             <Button type="primary" onClick={handleLogout}>
               Çıkış Yap
@@ -77,6 +78,7 @@ const App = () => {
       >
         <Register onOk={handleRegisterOk} />
       </Modal>
+      <Tasks /> {/* Tasks bileşenini her zaman göster */}
     </>
   );
 };

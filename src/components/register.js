@@ -13,7 +13,7 @@ const Register = ({ onOk }) => {
   const addData = () => {
     axios({
       method: "post",
-      url: "https://v1.nocodeapi.com/burakakgun/google_sheets/XLNzAUdGuVXdwxuJ?tabId=sayfa1",
+      url: "https://v1.nocodeapi.com/murat123/google_sheets/fYwOtwpoorhIdbbH?tabId=sayfa1",
       data: [Object.values(formData)],
     })
       .then((response) => {
