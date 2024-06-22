@@ -1,0 +1,26 @@
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f2f5;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1890ff;
+  }
+  
+  .form-item {
+    margin-bottom: 16px;
+  }
+  
+  .submit-button {
+    width: 100%;
+  }
+  

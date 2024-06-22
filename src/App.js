@@ -63,7 +63,6 @@ const App = () => {
         )}
       </div>
       <Modal
-        title="Giriş Yap"
         visible={isLoginModalOpen}
         onCancel={handleCancel}
         footer={null}
@@ -71,7 +70,6 @@ const App = () => {
         <Login onOk={handleLoginOk} />
       </Modal>
       <Modal
-        title="Kayıt Ol"
         visible={isRegisterModalOpen}
         onCancel={handleCancel}
         footer={null}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Form, Input, Button, Checkbox, notification } from "antd";
 import axios from "axios";
 import moment from "moment";
+import "./addTaskForm.css";
 
 const AddTaskForm = ({ visible, onCancel, onAdd }) => {
   const [newTask, setNewTask] = useState({
@@ -71,84 +72,86 @@ const AddTaskForm = ({ visible, onCancel, onAdd }) => {
 
   return (
     <Modal
-      title="Yeni Görev Ekle"
       visible={visible}
       onCancel={onCancel}
       footer={[
         <Button key="cancel" onClick={onCancel}>
           İptal
         </Button>,
-        <Button key="add" type="primary" onClick={handleAddTask}>
+        <Button key="add" type="primary" onClick={handleAddTask} className="submit-button">
           Ekle
         </Button>,
       ]}
     >
-      <Form layout="vertical">
-        <Form.Item label="İşin Adı">
-          <Input
-            name="isin_adi"
-            value={newTask.isin_adi}
-            onChange={handleNewTaskChange}
-          />
-        </Form.Item>
-        <Form.Item label="Zorunluluk">
-          <Checkbox
-            name="zorunluluk"
-            checked={newTask.zorunluluk}
-            onChange={handleCheckboxChange}
-          >
-            Zorunlu
-          </Checkbox>
-        </Form.Item>
-        <Form.Item label="İş Tanımı">
-          <Input
-            name="is_tanimi"
-            value={newTask.is_tanimi}
-            onChange={handleNewTaskChange}
-          />
-        </Form.Item>
-        <Form.Item label="Başlangıç Tarihi">
-          <Input
-            name="bas_tarih"
-            type="date"
-            value={newTask.bas_tarih}
-            onChange={handleNewTaskChange}
-          />
-        </Form.Item>
-        <Form.Item label="Başlangıç Saati">
-          <Input
-            name="bas_saat"
-            type="time"
-            value={newTask.bas_saat}
-            onChange={handleNewTaskChange}
-          />
-        </Form.Item>
-        <Form.Item label="Bitiş Tarihi">
-          <Input
-            name="bitis_tarih"
-            type="date"
-            value={newTask.bitis_tarih}
-            onChange={handleNewTaskChange}
-          />
-        </Form.Item>
-        <Form.Item label="Bitiş Saati">
-          <Input
-            name="bitis_saat"
-            type="time"
-            value={newTask.bitis_saat}
-            onChange={handleNewTaskChange}
-          />
-        </Form.Item>
-        <Form.Item label="Durum">
-          <Checkbox
-            name="durum"
-            checked={newTask.durum}
-            onChange={handleCheckboxChange}
-          >
-            Tamamlandı
-          </Checkbox>
-        </Form.Item>
-      </Form>
+      <div className="form-container">
+        <h2 className="form-title">Yeni Görev Ekle</h2>
+        <Form layout="vertical">
+          <Form.Item label="İşin Adı">
+            <Input
+              name="isin_adi"
+              value={newTask.isin_adi}
+              onChange={handleNewTaskChange}
+            />
+          </Form.Item>
+          <Form.Item label="Zorunluluk">
+            <Checkbox
+              name="zorunluluk"
+              checked={newTask.zorunluluk}
+              onChange={handleCheckboxChange}
+            >
+              <span className="checkbox-label">Zorunlu</span>
+            </Checkbox>
+          </Form.Item>
+          <Form.Item label="İş Tanımı">
+            <Input
+              name="is_tanimi"
+              value={newTask.is_tanimi}
+              onChange={handleNewTaskChange}
+            />
+          </Form.Item>
+          <Form.Item label="Başlangıç Tarihi">
+            <Input
+              name="bas_tarih"
+              type="date"
+              value={newTask.bas_tarih}
+              onChange={handleNewTaskChange}
+            />
+          </Form.Item>
+          <Form.Item label="Başlangıç Saati">
+            <Input
+              name="bas_saat"
+              type="time"
+              value={newTask.bas_saat}
+              onChange={handleNewTaskChange}
+            />
+          </Form.Item>
+          <Form.Item label="Bitiş Tarihi">
+            <Input
+              name="bitis_tarih"
+              type="date"
+              value={newTask.bitis_tarih}
+              onChange={handleNewTaskChange}
+            />
+          </Form.Item>
+          <Form.Item label="Bitiş Saati">
+            <Input
+              name="bitis_saat"
+              type="time"
+              value={newTask.bitis_saat}
+              onChange={handleNewTaskChange}
+            />
+          </Form.Item>
+          <Form.Item label="Durum">
+            <Checkbox
+              name="durum"
+              checked={newTask.durum}
+              onChange={handleCheckboxChange}
+            >
+              <span className="checkbox-label">Tamamlandı</span>
+            </Checkbox>
+          </Form.Item>
+        </Form>
+      </div>
     </Modal>
   );
 };

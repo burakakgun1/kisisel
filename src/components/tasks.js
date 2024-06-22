@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-import { Table, Input, Button, Calendar, Radio, Modal, notification, Checkbox, } from "antd";
-import AddTaskForm from "./addTaskForm.js"; // Assuming AddTaskForm.js is in the same directory
+import { Table, Input, Button, Calendar, Radio, Modal, notification, Checkbox } from "antd";
+import AddTaskForm from "./addTaskForm.js";
+import "./Tasks.css";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [reportType, setReportType] = useState("day"); // Default report type
+  const [reportType, setReportType] = useState("day");
   const [modalVisible, setModalVisible] = useState(false);
   const [reportStartDate, setReportStartDate] = useState(null);
   const [reportEndDate, setReportEndDate] = useState(null);
   const [filteredReport, setFilteredReport] = useState([]);
-  const [checkedTasks, setCheckedTasks] = useState({}); // State to manage checked state of checkboxes
-  const [addTaskModalVisible, setAddTaskModalVisible] = useState(false); // State for Add Task Modal
+  const [checkedTasks, setCheckedTasks] = useState({});
+  const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -68,7 +69,6 @@ const Tasks = () => {
 
         setTasks(sortedTasks);
         setFilteredTasks(sortedTasks);
-        // Initialize checkedTasks state
         const initialCheckedTasks = {};
         sortedTasks.forEach((task) => {
           initialCheckedTasks[task.key] = task.durum === "Tamamlandı";
@@ -226,9 +226,7 @@ const Tasks = () => {
     }
 
     handleModalClose();
-  };
-
-  const handleCheckboxChange = (key, checked) => {
+  };const handleCheckboxChange = (key, checked) => {
     setCheckedTasks((prev) => ({ ...prev, [key]: checked }));
   };
 
@@ -241,183 +239,185 @@ const Tasks = () => {
   };
 
   const handleAddTask = (newTaskData) => {
-    // Logic to add new task to tasks list
-        // Logic to add new task to tasks list
-        const updatedTasks = [
-          ...tasks,
-          {
-            ...newTaskData,
-            key: tasks.length + 1, // Assuming keys are unique and incremental
-          },
-        ];
-    
-        setTasks(updatedTasks);
-        setFilteredTasks(updatedTasks); // Update filtered tasks as well
-        setAddTaskModalVisible(false); // Close the Add Task modal
-      };
-    
-      const columns = [
-        {
-          title: "İşin Adı",
-          dataIndex: "isin_adi",
-          key: "isin_adi",
-        },
-        {
-          title: "Zorunluluk",
-          dataIndex: "zorunluluk",
-          key: "zorunluluk",
-        },
-        {
-          title: "İş Tanımı",
-          dataIndex: "is_tanimi",
-          key: "is_tanimi",
-        },
-        {
-          title: "Başlangıç Tarihi",
-          dataIndex: "bas_tarih",
-          key: "bas_tarih",
-          render: (bas_tarih) =>
-            moment(bas_tarih, "YYYY/MM/DD").format("YYYY-MM-DD"),
-        },
-        {
-          title: "Başlangıç Saati",
-          dataIndex: "bas_saat",
-          key: "bas_saat",
-        },
-        {
-          title: "Bitiş Tarihi",
-          dataIndex: "bitis_tarih",
-          key: "bitis_tarih",
-          render: (bitis_tarih) =>
-            moment(bitis_tarih, "YYYY/MM/DD").format("YYYY-MM-DD"),
-        },
-        {
-          title: "Bitiş Saati",
-          dataIndex: "bitis_saat",
-          key: "bitis_saat",
-        },
-        {
-          title: "Durum",
-          dataIndex: "durum",
-          key: "durum",
-          render: (durum, record) => (
-            <Checkbox
-              checked={checkedTasks[record.key]}
-              onChange={(e) => handleCheckboxChange(record.key, e.target.checked)}
-            />
-          ),
-        },
-      ];
-    
-      return (
-        <div
-          style={{
-            padding: "20px",
-            backgroundColor: "#f0f2f5",
-            borderRadius: "5px",
-          }}
+    const updatedTasks = [
+      ...tasks,
+      {
+        ...newTaskData,
+        key: tasks.length + 1, // Assuming keys are unique and incremental
+      },
+    ];
+
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
+    setAddTaskModalVisible(false); // Close the Add Task modal
+  };
+
+  const handleDelete = (key) => {
+    const updatedTasks = tasks.filter((task) => task.key !== key);
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
+  };
+
+  const columns = [
+    {
+      title: "İşin Adı",
+      dataIndex: "isin_adi",
+      key: "isin_adi",
+    },
+    {
+      title: "Zorunluluk",
+      dataIndex: "zorunluluk",
+      key: "zorunluluk",
+    },
+    {
+      title: "İş Tanımı",
+      dataIndex: "is_tanimi",
+      key: "is_tanimi",
+    },
+    {
+      title: "Başlangıç Tarihi",
+      dataIndex: "bas_tarih",
+      key: "bas_tarih",
+      render: (bas_tarih) =>
+        moment(bas_tarih, "YYYY/MM/DD").format("YYYY-MM-DD"),
+    },
+    {
+      title: "Başlangıç Saati",
+      dataIndex: "bas_saat",
+      key: "bas_saat",
+    },
+    {
+      title: "Bitiş Tarihi",
+      dataIndex: "bitis_tarih",
+      key: "bitis_tarih",
+      render: (bitis_tarih) =>
+        moment(bitis_tarih, "YYYY/MM/DD").format("YYYY-MM-DD"),
+    },
+    {
+      title: "Bitiş Saati",
+      dataIndex: "bitis_saat",
+      key: "bitis_saat",
+    },
+    {
+      title: "Durum",
+      dataIndex: "durum",
+      key: "durum",
+      render: (durum, record) => (
+        <Checkbox
+          checked={checkedTasks[record.key]}
+          onChange={(e) => handleCheckboxChange(record.key, e.target.checked)}
+        />
+      ),
+    },
+    {
+      title: "Sil",
+      key: "action",
+      render: (text, record) => (
+        <Button
+          type="primary"
+          onClick={() => handleDelete(record.key)}
         >
-          <h1 style={{ marginBottom: "20px" }}>Yapılacak İşler Listesi</h1>
-          <div
-            style={{
-              marginBottom: "20px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Input
-              style={{ width: 200, marginRight: 10 }}
-              onChange={handleStartDateChange}
-              value={startDate}
-              type="date"
-              placeholder="Başlangıç Tarihi (YYYY-MM-DD)"
-            />
-            <Input
-              style={{ width: 200, marginRight: 10 }}
-              onChange={handleEndDateChange}
-              value={endDate}
-              type="date"
-              placeholder="Bitiş Tarihi (YYYY-MM-DD)"
-            />
-            <Button type="primary" onClick={handleSearch}>
-              Ara
-            </Button>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            <Table
-              dataSource={filteredTasks}
-              columns={columns}
-              rowKey={(record) => record.key}
-              rowClassName={(record) =>
-                record.zorunluluk === "Evet" ? "red-row" : ""
-              }
-              pagination={{ pageSize: 10 }}
-              onChange={handleTableChange}
-              style={{ flex: 1 }}
-            />
-            <Calendar
-              dateCellRender={dateCellRender}
-              style={{ flex: 1, height: 400, marginRight: "20px" }}
-            />
-          </div>
-          <div style={{ marginTop: "20px" }}>
-            <Radio.Group onChange={handleReportTypeChange} value={reportType}>
-              <Radio.Button value="day">Gün</Radio.Button>
-              <Radio.Button value="week">Hafta</Radio.Button>
-              <Radio.Button value="month">Ay</Radio.Button>
-              <Radio.Button value="year">Yıl</Radio.Button>
-            </Radio.Group>
-            <Button
-              type="primary"
-              style={{ marginLeft: "10px" }}
-              onClick={handleReportButtonClick}
-            >
-              Rapor Al
-            </Button>
-            <Button
-              type="primary"
-              style={{ marginLeft: "10px" }}
-              onClick={handleAddTaskModalOpen}
-            >
-              Görev Ekle
-            </Button>
-          </div>
-          <Modal
-            title="Rapor Detayları"
-            visible={modalVisible}
-            onCancel={handleModalClose}
-            footer={[
-              <Button key="ok" type="primary" onClick={handleModalClose}>
-                Tamam
-              </Button>,
-              <Button key="mail" type="primary" onClick={handleSendMail}>
-                Mail Gönder
-              </Button>,
-            ]}
-            width={800} // Adjust width as per your content
-          >
-            {reportStartDate && reportEndDate && (
-              <div>
-                <p>Başlangıç Tarihi: {reportStartDate.format("YYYY-MM-DD")}</p>
-                <p>Bitiş Tarihi: {reportEndDate.format("YYYY-MM-DD")}</p>
-              </div>
-            )}
-            <Table
-              dataSource={filteredReport}
-              columns={columns}
-              rowKey={(record) => record.key}
-              pagination={{ pageSize: 5 }}
-              style={{ marginTop: "20px" }}
-            />
-          </Modal>
-          <AddTaskForm
-            visible={addTaskModalVisible}
-            onCancel={handleAddTaskModalClose}
-            onAdd={handleAddTask}
-          />
+          Sil
+        </Button>
+      ),
+    },
+  ];
+
+  return (
+    <div className="tasks-container">
+      <h1>Yapılacak İşler Listesi</h1>
+      <div className="search-bar">
+        <Input
+          className="search-input"
+          onChange={handleStartDateChange}
+          value={startDate}
+          type="date"
+          placeholder="Başlangıç Tarihi (YYYY-MM-DD)"
+        />
+        <Input
+          className="search-input"
+          onChange={handleEndDateChange}
+          value={endDate}
+          type="date"
+          placeholder="Bitiş Tarihi (YYYY-MM-DD)"
+        />
+        <Button type="primary" onClick={handleSearch}>
+          Ara
+        </Button>
+      </div>
+      <div className="tasks-wrapper">
+        <Table
+          className="tasks-table"
+          dataSource={filteredTasks}
+          columns={columns}
+          rowKey={(record) => record.key}
+          rowClassName={(record) =>
+            record.zorunluluk === "Evet" ? "red-row" : ""
+          }
+          pagination={{ pageSize: 10 }}
+          onChange={handleTableChange}
+        />
+        <div className="calendar-container">
+        <div className="report-section">
+        <Radio.Group onChange={handleReportTypeChange} value={reportType}>
+          <Radio.Button value="day">Gün</Radio.Button>
+          <Radio.Button value="week">Hafta</Radio.Button>
+          <Radio.Button value="month">Ay</Radio.Button>
+          <Radio.Button value="year">Yıl</Radio.Button>
+        </Radio.Group>
+        <Button
+          className="report-button"
+          type="primary"
+          onClick={handleReportButtonClick}
+        >
+          Rapor Al
+        </Button>
+        <Button
+          className="add-task-button"
+          type="primary"
+          onClick={handleAddTaskModalOpen}
+        >
+          Görev Ekle
+        </Button>
+      </div>
+          <Calendar className="tasks-calendar" dateCellRender={dateCellRender} />
         </div>
-      );
-    };
-    
-    export default Tasks;
-    
+      </div>
+      <Modal
+        title="Rapor Detayları"
+        visible={modalVisible}
+        onCancel={handleModalClose}
+        footer={[
+          <Button key="ok" type="primary" onClick={handleModalClose}>
+            Tamam
+          </Button>,
+          <Button key="mail" type="primary" onClick={handleSendMail}>
+            Mail Gönder
+          </Button>,
+        ]}
+        width={800}
+      >
+        {reportStartDate && reportEndDate && (
+          <div>
+            <p>Başlangıç Tarihi: {reportStartDate.format("YYYY-MM-DD")}</p>
+            <p>Bitiş Tarihi: {reportEndDate.format("YYYY-MM-DD")}</p>
+          </div>
+        )}
+        <Table
+          dataSource={filteredReport}
+          columns={columns}
+          rowKey={(record) => record.key}
+          pagination={{ pageSize: 5 }}
+          style={{ marginTop: "20px" }}
+        />
+      </Modal>
+      <AddTaskForm
+        visible={addTaskModalVisible}
+        onCancel={handleAddTaskModalClose}
+        onAdd={handleAddTask}
+      />
+    </div>
+  );
+};
+
+export default Tasks;

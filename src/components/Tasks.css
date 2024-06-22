@@ -1,0 +1,50 @@
+.tasks-container {
+    padding: 20px;
+    background-color: #f0f2f5;
+    border-radius: 5px;
+    }
+    
+    .tasks-container h1 {
+    margin-bottom: 20px;
+    }
+    
+    .search-bar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    }
+    
+    .search-input {
+    width: 200px;
+    margin-right: 10px;
+    }
+    
+    .tasks-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    
+    .tasks-table {
+    flex: 1;
+    }
+    
+    .tasks-calendar {
+    flex: 1;
+    height: 400px;
+    margin-right: 20px;
+    }
+    
+    .report-section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    }
+    
+    .report-button,
+    .add-task-button {
+    margin-left: 10px;
+    }
+    
+    .red-row {
+    background-color: red !important;
+    }
+    
