@@ -76,7 +76,7 @@ const App = () => {
       >
         <Register onOk={handleRegisterOk} />
       </Modal>
-      <Tasks /> {/* Tasks bileşenini her zaman göster */}
+      {isLoggedIn && <Tasks />}
     </>
   );
 };

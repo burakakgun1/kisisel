@@ -1,8 +1,11 @@
+// Tasks.js
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { Table, Input, Button, Calendar, Radio, Modal, notification, Checkbox } from "antd";
 import AddTaskForm from "./addTaskForm.js";
+import Sil from "./sil.js"; // Sil bileşenini import ettiğinizden emin olun
 import "./Tasks.css";
 
 const Tasks = () => {
@@ -38,7 +41,7 @@ const Tasks = () => {
 
   const fetchData = () => {
     axios
-      .get("https://v1.nocodeapi.com/murat123/google_sheets/YVjVpGRfkWTXuTTG?tabId=sayfa1")
+      .get("https://v1.nocodeapi.com/yedek/google_sheets/KvEQPWMtJmOfKcUg?tabId=sayfa1")
       .then((response) => {
         const rows = response.data.data;
         const today = moment().format("YYYY/MM/DD");
@@ -226,8 +229,15 @@ const Tasks = () => {
     }
 
     handleModalClose();
-  };const handleCheckboxChange = (key, checked) => {
+  };
+
+  const handleCheckboxChange = (key, checked) => {
     setCheckedTasks((prev) => ({ ...prev, [key]: checked }));
+    const updatedTasks = tasks.map((task) =>
+      task.key === key ? { ...task, durum: checked ? "Tamamlandı" : "Tamamlanmadı" } : task
+    );
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
   };
 
   const handleAddTaskModalOpen = () => {
@@ -313,12 +323,7 @@ const Tasks = () => {
       title: "Sil",
       key: "action",
       render: (text, record) => (
-        <Button
-          type="primary"
-          onClick={() => handleDelete(record.key)}
-        >
-          Sil
-        </Button>
+        <Sil rowId={record.key} onDelete={() => handleDelete(record.key)} />
       ),
     },
   ];
@@ -358,28 +363,28 @@ const Tasks = () => {
           onChange={handleTableChange}
         />
         <div className="calendar-container">
-        <div className="report-section">
-        <Radio.Group onChange={handleReportTypeChange} value={reportType}>
-          <Radio.Button value="day">Gün</Radio.Button>
-          <Radio.Button value="week">Hafta</Radio.Button>
-          <Radio.Button value="month">Ay</Radio.Button>
-          <Radio.Button value="year">Yıl</Radio.Button>
-        </Radio.Group>
-        <Button
-          className="report-button"
-          type="primary"
-          onClick={handleReportButtonClick}
-        >
-          Rapor Al
-        </Button>
-        <Button
-          className="add-task-button"
-          type="primary"
-          onClick={handleAddTaskModalOpen}
-        >
-          Görev Ekle
-        </Button>
-      </div>
+          <div className="report-section">
+            <Radio.Group onChange={handleReportTypeChange} value={reportType}>
+              <Radio.Button value="day">Gün</Radio.Button>
+              <Radio.Button value="week">Hafta</Radio.Button>
+              <Radio.Button value="month">Ay</Radio.Button>
+              <Radio.Button value="year">Yıl</Radio.Button>
+            </Radio.Group>
+            <Button
+              className="report-button"
+              type="primary"
+              onClick={handleReportButtonClick}
+            >
+              Rapor Al
+            </Button>
+            <Button
+              className="add-task-button"
+              type="primary"
+              onClick={handleAddTaskModalOpen}
+            >
+              Görev Ekle
+            </Button>
+          </div>
           <Calendar className="tasks-calendar" dateCellRender={dateCellRender} />
         </div>
       </div>
@@ -421,3 +426,4 @@ const Tasks = () => {
 };
 
 export default Tasks;
+

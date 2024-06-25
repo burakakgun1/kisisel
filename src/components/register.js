@@ -15,7 +15,7 @@ const Register = ({ onOk }) => {
     axios({
       method: "post",
       url:
-        "https://v1.nocodeapi.com/murat123/google_sheets/fYwOtwpoorhIdbbH?tabId=sayfa1",
+        "https://v1.nocodeapi.com/yedek/google_sheets/FPFQuKqADSzNJUyD?tabId=sayfa1",
       data: [Object.values(formData)],
     })
       .then((response) => {

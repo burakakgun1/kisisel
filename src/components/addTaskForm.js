@@ -29,18 +29,18 @@ const AddTaskForm = ({ visible, onCancel, onAdd }) => {
   const handleAddTask = () => {
     const newTaskData = {
       isin_adi: newTask.isin_adi,
-      zorunluluk: newTask.zorunluluk ? "Evet" : "Hayır",
+      zorunluluk: newTask.zorunluluk === "Evet" ? "1" : "0",
       is_tanimi: newTask.is_tanimi,
       bas_tarih: moment(newTask.bas_tarih).format("DD.MM.YYYY"),
       bas_saat: moment(newTask.bas_saat, "HH:mm").format("HH:mm:ss"),
       bitis_tarih: moment(newTask.bitis_tarih).format("DD.MM.YYYY"),
       bitis_saat: moment(newTask.bitis_saat, "HH:mm").format("HH:mm:ss"),
-      durum: newTask.durum ? "Tamamlandı" : "Tamamlanmadı",
+      durum: newTask.durum === "Tamamlandı" ? "1" : "0",
     };
 
     axios({
       method: "post",
-      url: "https://v1.nocodeapi.com/murat123/google_sheets/YVjVpGRfkWTXuTTG?tabId=sayfa1",
+      url: "url",
       data: [Object.values(newTaskData)],
     })
       .then((response) => {
